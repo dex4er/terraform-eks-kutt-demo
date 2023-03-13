@@ -17,9 +17,10 @@ module "vpc" {
   azs = var.azs
 
   ## It is for private cluster with ELBs in public and master nodes in intra range
-  public_subnets  = ["10.99.0.0/24", "10.99.1.0/24", "10.99.2.0/24"]
-  private_subnets = ["10.99.3.0/24", "10.99.4.0/24", "10.99.5.0/24"]
-  intra_subnets   = ["10.99.6.0/24", "10.99.7.0/24", "10.99.8.0/24"]
+  public_subnets   = ["10.99.0.0/24", "10.99.1.0/24", "10.99.2.0/24"]
+  private_subnets  = ["10.99.3.0/24", "10.99.4.0/24", "10.99.5.0/24"]
+  intra_subnets    = ["10.99.6.0/24", "10.99.7.0/24", "10.99.8.0/24"]
+  database_subnets = ["10.99.9.0/24", "10.99.10.0/24", "10.99.11.0/24"]
 
   ## https://github.com/terraform-aws-modules/terraform-aws-vpc#nat-gateway-scenarios
   ## One NAT Gateway per subnet: we have single AZ node groups

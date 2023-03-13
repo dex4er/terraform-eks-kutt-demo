@@ -12,7 +12,8 @@ module "irsa_external_secrets" {
 
   attach_external_secrets_policy = true
 
-  external_secrets_ssm_parameter_arns = ["arn:aws:ssm:${var.region}:${var.account_id}:parameter/${var.name}-*"]
+  external_secrets_secrets_manager_arns = ["arn:aws:secretsmanager:${var.region}:${var.account_id}:secret:${var.name}-*"]
+  external_secrets_ssm_parameter_arns   = ["arn:aws:ssm:${var.region}:${var.account_id}:parameter/${var.name}-*"]
 
   oidc_providers = {
     (module.eks.cluster_name) = {

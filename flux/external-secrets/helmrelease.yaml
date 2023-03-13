@@ -1,0 +1,29 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: external-secrets
+  namespace: external-secrets
+spec:
+  interval: 1m
+  timeout: 2m
+  maxHistory: 2
+  chart:
+    spec:
+      interval: 1m
+      chart: external-secrets
+      ## https://github.com/external-secrets/external-secrets/releases
+      version: "0.7.2"
+      sourceRef:
+        kind: HelmRepository
+        name: external-secrets
+      reconcileStrategy: Revision
+  install:
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
+  values:
+    ## https://github.com/external-secrets/external-secrets/blob/main/deploy/charts/external-secrets/values.yaml
+
+    serviceAccount:
+      annotations:
+        eks.amazonaws.com/role-arn: arn:aws:iam::${account_id}:role/${cluster_name}-irsa-external-secrets

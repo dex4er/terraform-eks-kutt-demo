@@ -5,5 +5,7 @@ resources:
   - all.yaml
   - aws-load-balancer-controller.yaml
   - cluster-autoscaler.yaml
+  - external-secrets.yaml
+  - external-secrets-stores.yaml
   - flux-system.yaml
   - podinfo.yaml

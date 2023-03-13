@@ -7,7 +7,7 @@ module "rds_cluster" {
 
   engine            = "aurora-postgresql"
   engine_mode       = "serverless"
-  engine_version    = "12.13"
+  engine_version    = "13.7"
   storage_encrypted = true
 
   database_name          = "kutt"

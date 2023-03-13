@@ -29,6 +29,10 @@ module "rds_cluster" {
 
   instance_class = "db.t3.medium"
 
+  instances = {
+    one = {}
+  }
+
   ## defaults are fine
   create_db_cluster_parameter_group = false
 

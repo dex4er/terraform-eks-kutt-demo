@@ -6,7 +6,7 @@ module "rds_cluster" {
   name = "${var.name}-postgresql"
 
   engine            = "aurora-postgresql"
-  engine_mode       = "serverless"
+  engine_mode       = "provisioned"
   engine_version    = "13.7"
   storage_encrypted = true
 
@@ -28,12 +28,9 @@ module "rds_cluster" {
   apply_immediately   = true
   skip_final_snapshot = true
 
-  scaling_configuration = {
-    auto_pause               = false
-    min_capacity             = 2
-    max_capacity             = 8
-    seconds_until_auto_pause = 600
-    timeout_action           = "RollbackCapacityChange"
+  serverlessv2_scaling_configuration = {
+    min_capacity = 1
+    max_capacity = 4
   }
 
   ## defaults are fine

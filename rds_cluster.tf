@@ -7,7 +7,7 @@ module "rds_cluster" {
 
   engine            = "aurora-postgresql"
   engine_mode       = "provisioned"
-  engine_version    = "13.7"
+  engine_version    = "12.13"
   storage_encrypted = true
 
   database_name          = "kutt"
@@ -19,7 +19,6 @@ module "rds_cluster" {
 
   create_security_group          = true
   security_group_use_name_prefix = false
-  enable_http_endpoint           = true
 
   allowed_cidr_blocks = var.cluster_in_private_subnet ? module.vpc.private_subnets_cidr_blocks : module.vpc.public_subnets_cidr_blocks
 
@@ -28,10 +27,7 @@ module "rds_cluster" {
   apply_immediately   = true
   skip_final_snapshot = true
 
-  serverlessv2_scaling_configuration = {
-    min_capacity = 1
-    max_capacity = 4
-  }
+  instance_class = "db.t3.medium"
 
   ## defaults are fine
   create_db_cluster_parameter_group = false

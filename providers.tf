@@ -14,6 +14,10 @@ terraform {
       source  = "hashicorp/cloudinit"
       version = "2.3.2"
     }
+    external = {
+      source  = "hashicorp/external"
+      version = "2.3.1"
+    }
     kubernetes = {
       source  = "hashicorp/kubernetes"
       version = "2.18.1"

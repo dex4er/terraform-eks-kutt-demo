@@ -51,6 +51,17 @@ module "rds_cluster" {
   }
 }
 
+resource "aws_ssm_parameter" "rds-cluster-database-name" {
+  name  = "${var.name}-rds-cluster-database-name"
+  type  = "String"
+  value = module.rds_cluster.cluster_database_name
+
+  tags = {
+    Name   = "${var.name}-rds-cluster-database-name"
+    Object = "aws_ssm_parameter.rds-cluster-database-name"
+  }
+}
+
 resource "aws_ssm_parameter" "rds-cluster-endpoint" {
   name  = "${var.name}-rds-cluster-endpoint"
   type  = "String"
@@ -59,5 +70,16 @@ resource "aws_ssm_parameter" "rds-cluster-endpoint" {
   tags = {
     Name   = "${var.name}-rds-cluster-endpoint"
     Object = "aws_ssm_parameter.rds-cluster-endpoint"
+  }
+}
+
+resource "aws_ssm_parameter" "rds-cluster-port" {
+  name  = "${var.name}-rds-cluster-port"
+  type  = "String"
+  value = module.rds_cluster.cluster_port
+
+  tags = {
+    Name   = "${var.name}-rds-cluster-port"
+    Object = "aws_ssm_parameter.rds-cluster-port"
   }
 }

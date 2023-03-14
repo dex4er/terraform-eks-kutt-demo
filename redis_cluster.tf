@@ -17,3 +17,25 @@ resource "aws_elasticache_cluster" "this" {
   subnet_group_name    = aws_elasticache_subnet_group.this.name
   security_group_ids   = [module.sg_redis.security_group_id]
 }
+
+resource "aws_ssm_parameter" "redis-cluster-address" {
+  name  = "${var.name}-redis-cluster-address"
+  type  = "String"
+  value = aws_elasticache_cluster.this.cache_nodes[0].address
+
+  tags = {
+    Name   = "${var.name}-redis-cluster-address"
+    Object = "aws_ssm_parameter.redis-cluster-address"
+  }
+}
+
+resource "aws_ssm_parameter" "redis-cluster-port" {
+  name  = "${var.name}-redis-cluster-port"
+  type  = "String"
+  value = aws_elasticache_cluster.this.cache_nodes[0].port
+
+  tags = {
+    Name   = "${var.name}-redis-cluster-port"
+    Object = "aws_ssm_parameter.redis-cluster-port"
+  }
+}

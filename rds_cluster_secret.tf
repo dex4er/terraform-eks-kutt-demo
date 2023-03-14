@@ -1,3 +1,6 @@
+## Master password is only one-time password that is changed by lambda then
+## stored in a secrets manager
+
 module "rds_cluster_secret" {
   source = "./modules/secret-postgresql"
 

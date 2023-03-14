@@ -1,3 +1,7 @@
+## kutt.it is tested with PostgreSQL 12.x so we can't use serverless here (> 13)
+##
+## Application will use master password before some hardening will be possible.
+
 module "rds_cluster" {
   ## https://github.com/terraform-aws-modules/terraform-aws-rds-aurora
   source  = "terraform-aws-modules/rds-aurora/aws"
@@ -48,38 +52,5 @@ module "rds_cluster" {
   tags = {
     Name   = "${var.name}-postgresql"
     Object = "module.rds_cluster"
-  }
-}
-
-resource "aws_ssm_parameter" "rds-cluster-database-name" {
-  name  = "${var.name}-rds-cluster-database-name"
-  type  = "String"
-  value = module.rds_cluster.cluster_database_name
-
-  tags = {
-    Name   = "${var.name}-rds-cluster-database-name"
-    Object = "aws_ssm_parameter.rds-cluster-database-name"
-  }
-}
-
-resource "aws_ssm_parameter" "rds-cluster-endpoint" {
-  name  = "${var.name}-rds-cluster-endpoint"
-  type  = "String"
-  value = module.rds_cluster.cluster_endpoint
-
-  tags = {
-    Name   = "${var.name}-rds-cluster-endpoint"
-    Object = "aws_ssm_parameter.rds-cluster-endpoint"
-  }
-}
-
-resource "aws_ssm_parameter" "rds-cluster-port" {
-  name  = "${var.name}-rds-cluster-port"
-  type  = "String"
-  value = module.rds_cluster.cluster_port
-
-  tags = {
-    Name   = "${var.name}-rds-cluster-port"
-    Object = "aws_ssm_parameter.rds-cluster-port"
   }
 }

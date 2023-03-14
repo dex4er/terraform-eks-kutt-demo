@@ -51,7 +51,6 @@ Handles rotation of the Secrets Manager secret for RDS PostgreSQL.
 | <a name="input_vpc_database_subnet_cidrs"></a> [vpc_database_subnet_cidrs](#input_vpc_database_subnet_cidrs) | List of subnet CIDRs where database is in the VPC.                                                                                                                           | `list(string)` | n/a     |   yes    |
 | <a name="input_vpc_id"></a> [vpc_id](#input_vpc_id)                                                          | ID of the VPC.                                                                                                                                                               | `string`       | n/a     |   yes    |
 | <a name="input_vpc_private_subnet_ids"></a> [vpc_private_subnet_ids](#input_vpc_private_subnet_ids)          | List of subnet ids when Lambda Function should run in the VPC.                                                                                                               | `list(string)` | n/a     |   yes    |
-| <a name="input_workspace"></a> [workspace](#input_workspace)                                                 | Name of this Terraform workspace.                                                                                                                                            | `string`       | n/a     |   yes    |
 
 ## Outputs
 

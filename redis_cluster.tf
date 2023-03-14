@@ -13,6 +13,6 @@ resource "aws_elasticache_cluster" "this" {
   parameter_group_name = "default.redis6.x"
   engine_version       = "6.0"
   port                 = 6379
-  availability_zone    = var.azs[0]
+  availability_zone    = data.aws_availability_zones.this[0].names[0]
   subnet_group_name    = aws_elasticache_subnet_group.this.name
 }

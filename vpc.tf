@@ -40,6 +40,14 @@ module "vpc" {
   default_route_table_tags    = { Name = "${var.name}-default" }
   default_security_group_tags = { Name = "${var.name}-default" }
 
+  database_subnet_tags = {
+    Reach = "database"
+  }
+
+  elasticache_subnet_tags = {
+    Reach = "elasticache"
+  }
+
   intra_subnet_tags = {
     Reach = "intra"
   }

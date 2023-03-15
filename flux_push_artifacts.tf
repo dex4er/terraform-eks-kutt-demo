@@ -8,13 +8,13 @@ data "archive_file" "flux" {
 
 resource "null_resource" "flux_push_artifact" {
   triggers = {
-    asdf_dir                = coalesce(var.asdf_dir, ".asdf-flux_push_artifact")
+    asdf_dir                = coalesce(var.asdf_dir, "$PWD/.asdf-flux_push_artifact")
     asdf_tools              = "awscli flux2 go-containerregistry"
     flux_directory_checksum = data.archive_file.flux.output_base64sha256
   }
 
   provisioner "local-exec" {
-    command     = "test -d ${self.triggers.asdf_dir} || git clone https://github.com/asdf-vm/asdf.git ${self.triggers.asdf_dir} --branch v0.11.2 && export ASDF_DATA_DIR=${self.triggers.asdf_dir} && . ${self.triggers.asdf_dir}/asdf.sh && for plugin in ${self.triggers.asdf_tools}; do asdf plugin add $plugin || test $? = 2; asdf install $plugin; done"
+    command     = "test -d ${self.triggers.asdf_dir} || git clone https://github.com/asdf-vm/asdf.git ${self.triggers.asdf_dir} --branch v0.11.2 && export ASDF_DATA_DIR=${self.triggers.asdf_dir} && cd ${self.triggers.asdf_dir} && . asdf.sh && for plugin in ${self.triggers.asdf_tools}; do asdf plugin add $plugin || test $? = 2; asdf install $plugin; done"
     interpreter = ["/bin/bash", "-c"]
   }
 

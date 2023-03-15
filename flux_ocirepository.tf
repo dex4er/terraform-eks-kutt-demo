@@ -2,7 +2,7 @@
 
 resource "null_resource" "flux_ocirepository" {
   triggers = {
-    asdf_dir                   = coalesce(var.asdf_dir, ".asdf-flux_ocirepository")
+    asdf_dir                   = coalesce(var.asdf_dir, "$PWD/.asdf-flux_ocirepository")
     asdf_tools                 = "awscli flux2 kubectl"
     cluster_context            = local.cluster_context
     flux_system_repository_url = local.flux_system_repository_url
@@ -11,7 +11,7 @@ resource "null_resource" "flux_ocirepository" {
   }
 
   provisioner "local-exec" {
-    command     = "test -d ${self.triggers.asdf_dir} || git clone https://github.com/asdf-vm/asdf.git ${self.triggers.asdf_dir} --branch v0.11.2 && export ASDF_DATA_DIR=${self.triggers.asdf_dir} && . ${self.triggers.asdf_dir}/asdf.sh && for plugin in ${self.triggers.asdf_tools}; do asdf plugin add $plugin || test $? = 2; asdf install $plugin; done"
+    command     = "test -d ${self.triggers.asdf_dir} || git clone https://github.com/asdf-vm/asdf.git ${self.triggers.asdf_dir} --branch v0.11.2 && export ASDF_DATA_DIR=${self.triggers.asdf_dir} && cd ${self.triggers.asdf_dir} && . asdf.sh && for plugin in ${self.triggers.asdf_tools}; do asdf plugin add $plugin || test $? = 2; asdf install $plugin; done"
     interpreter = ["/bin/bash", "-c"]
   }
 
@@ -22,7 +22,7 @@ resource "null_resource" "flux_ocirepository" {
 
   provisioner "local-exec" {
     when        = destroy
-    command     = "test -d ${self.triggers.asdf_dir} || git clone https://github.com/asdf-vm/asdf.git ${self.triggers.asdf_dir} --branch v0.11.2 && export ASDF_DATA_DIR=${self.triggers.asdf_dir} && . ${self.triggers.asdf_dir}/asdf.sh && for plugin in ${self.triggers.asdf_tools}; do asdf plugin add $plugin || test $? = 2; asdf install $plugin; done"
+    command     = "test -d ${self.triggers.asdf_dir} || git clone https://github.com/asdf-vm/asdf.git ${self.triggers.asdf_dir} --branch v0.11.2 && export ASDF_DATA_DIR=${self.triggers.asdf_dir} && cd ${self.triggers.asdf_dir} && . asdf.sh && for plugin in ${self.triggers.asdf_tools}; do asdf plugin add $plugin || test $? = 2; asdf install $plugin; done"
     interpreter = ["/bin/bash", "-c"]
   }
 

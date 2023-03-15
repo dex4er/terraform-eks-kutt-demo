@@ -11,6 +11,9 @@ metadata:
     app.kubernetes.io/name: kutt
   name: kutt
 spec:
+  tls:
+    - hosts:
+        - kutt.${cluster_domain}
   rules:
     - host: kutt.${cluster_domain}
       http:

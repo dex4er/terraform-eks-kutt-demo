@@ -1,11 +1,11 @@
 ?.*
 
 .asdf*
+.env
 .kube
 .terraform
 .vscode
 
-*.env
 *.log
 *.tfplan
 *.tfvars

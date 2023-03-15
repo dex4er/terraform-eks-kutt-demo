@@ -8,4 +8,4 @@ resources:
   - external-secrets.yaml
   - external-secrets-stores.yaml
   - flux-system.yaml
-  - podinfo.yaml
+  - kutt.yaml

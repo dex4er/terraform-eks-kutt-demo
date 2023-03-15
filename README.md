@@ -8,7 +8,6 @@ project which provides a very basic EKS cluster:
 - encrypted at rest
 - has customized nodes in a self-managed node group
 - has enabled autoscaler and AWS load balancer controller
-- exposes hello-world application
 
 The demo uses <https://github.com/terraform-aws-modules> modules. All modules and
 resources and in main directory to make modifications easier so this project can

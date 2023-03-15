@@ -297,8 +297,7 @@ state will is no longer local and might be used by more developers.
 
 In this case the workspace should have Execution Mode: Remote. All variables from
 `terraform.tfvars` file should be added as "Workspace variables" (note: arrays
-should be added as HCL). Additionally environment variable `AWS_REGION` should
-be added too.
+should be added as HCL).
 
 Variables for AWS API (`AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`) might be
 added as "Variable sets".

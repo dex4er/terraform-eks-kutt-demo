@@ -197,6 +197,14 @@ You can switch to your profile:
 assume dex4er
 ```
 
+### DNS
+
+Kutt service needs HTTPS protocol to run then it requires a TLS certificate and
+static DNS name.
+
+The hosted Route 53 zone should be already registred then in Terraform variables
+this domain should be set as `domain_name`.
+
 ## Usage
 
 - Check current context:
@@ -219,7 +227,8 @@ admin_role_arns           = ["arn:aws:iam::123456789012:role/Admin"]
 admin_user_arns           = ["arn:aws:iam::123456789012:user/admin"]
 assume_role               = "arn:aws:iam::123456789012:role/Admin"
 azs                       = ["euc-az1", "euc-az2", "euc-az3"]
-name                      = "challenge-dex4er"
+domain_name               = "dex4er.example.com"
+name                      = "terraform-eks-kutt-demo"
 region                    = "eu-central-1"
 ```
 
@@ -327,13 +336,8 @@ then it will require the restart of the application.
 
 ### Ingress
 
-There is an ALB ingress used for the application. Currently, there is no
-`external-dns` service running in the cluster so ingress is created on some
-random DNS name. It can be verified with
-
-```sh
-kubectl get ingress -n kutt
-```
+There is an ALB ingress used for the application. It requires to use route53
+zone.
 
 ## TODO
 
@@ -349,7 +353,6 @@ kubectl get ingress -n kutt
   another StorageClass might be used in place of the default.
 - AWS Node Termination Handler should be installed for safer handling of spot
   instances.
-- There is no `cert-manager` and `external-dns` yet.
 - There is no `metrics-server` so HorizontalPodAutoscaler doesn't work yet.
 - The cluster misses Prometheus. External AWS Prometheus instance might be used
   for longer-term storage.

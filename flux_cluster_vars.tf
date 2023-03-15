@@ -11,6 +11,7 @@ resource "null_resource" "flux_cluster_vars" {
     cluster_context            = local.cluster_context
     flux_system_repository_url = local.flux_system_repository_url
     kubeconfig_parameter       = aws_ssm_parameter.kubeconfig.name
+    domain_name                = var.domain_name
     name                       = var.name
     region                     = var.region
     vpc_id                     = local.vpc_id
@@ -30,6 +31,7 @@ resource "null_resource" "flux_cluster_vars" {
       ], [for i, v in var.azs :
       " --from-literal=azs_name_${i}=${data.aws_availability_zones.this[i].names[0]}"
       ], [
+      " --from-literal=cluster_domain=${var.domain_name}",
       " --from-literal=cluster_name=${var.name}",
       " --from-literal=region=${var.region}",
       " --from-literal=vpc_id=${local.vpc_id}",

@@ -38,6 +38,11 @@ variable "cluster_in_private_subnet" {
   description = "By default cluster is created in public subnet to lower montly costs of NAT gateway and service endpoints"
 }
 
+variable "domain_name" {
+  type        = string
+  description = "Domain name of the services in the cluster"
+}
+
 variable "region" {
   type        = string
   description = "AWS region"

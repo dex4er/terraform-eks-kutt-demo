@@ -1,0 +1,48 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: external-dns
+  namespace: external-dns
+spec:
+  interval: 1m
+  timeout: 2m
+  maxHistory: 2
+  chart:
+    spec:
+      interval: 1m
+      chart: external-dns
+      ## https://github.com/kubernetes-sigs/external-dns/releases
+      ## https://github.com/kubernetes-sigs/external-dns/blob/master/charts/external-dns/Chart.yaml#L5
+      version: "1.12.1"
+      sourceRef:
+        kind: HelmRepository
+        name: external-dns
+      reconcileStrategy: Revision
+  install:
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
+  values:
+    ## https://github.com/kubernetes-sigs/external-dns/blob/master/charts/external-dns/values.yaml
+
+    serviceAccount:
+      name: external-dns
+      annotations:
+        eks.amazonaws.com/role-arn: arn:aws:iam::${account_id}:role/${cluster_name}-irsa-external-dns
+
+    sources:
+      - ingress
+      - service
+
+    policy: sync
+
+    txtOwnerId: ${cluster_name}
+    txtPrefix: _external-dns.
+
+    domainFilters:
+      - ${cluster_domain}
+
+    provider: aws
+
+    extraArgs:
+      - --txt-wildcard-replacement=_

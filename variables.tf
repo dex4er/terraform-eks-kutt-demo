@@ -50,6 +50,6 @@ variable "region" {
 
 variable "name" {
   type        = string
-  default     = "terraform-eks-flux-demo"
+  default     = "terraform-eks-kutt-demo"
   description = "Name of the cluster and prefix of created AWS resources"
 }

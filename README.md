@@ -260,8 +260,8 @@ Workloads in the cluster must be removed in the correct order to prevent leaving
 orphaned resources:
 
 1. Stopping Flux updates.
-2. Removing all kustomizations except AWS resource controllers and Flux "all"
-   kustomization.
+2. Removing all kustomizations except AWS resource controllers, external-dns and
+   Flux "all" kustomization.
 3. Removing AWS resource controllers.
 4. Uninstalling Flux.
 

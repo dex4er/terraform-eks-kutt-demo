@@ -17,11 +17,11 @@ module "vpc" {
   azs = var.azs
 
   ## It is for private cluster with ELBs in public and master nodes in intra range
-  public_subnets      = ["10.99.0.0/24", "10.99.1.0/24", "10.99.2.0/24"]
-  private_subnets     = ["10.99.3.0/24", "10.99.4.0/24", "10.99.5.0/24"]
-  intra_subnets       = ["10.99.6.0/24", "10.99.7.0/24", "10.99.8.0/24"]
-  database_subnets    = ["10.99.9.0/24", "10.99.10.0/24", "10.99.11.0/24"]
-  elasticache_subnets = ["10.99.12.0/24", "10.99.13.0/24", "10.99.14.0/24"]
+  public_subnets      = ["10.99.11.0/24", "10.99.12.0/24", "10.99.13.0/24"]
+  private_subnets     = ["10.99.21.0/24", "10.99.22.0/24", "10.99.23.0/24"]
+  intra_subnets       = ["10.99.31.0/24", "10.99.32.0/24", "10.99.33.0/24"]
+  database_subnets    = ["10.99.41.0/24", "10.99.42.0/24", "10.99.43.0/24"]
+  elasticache_subnets = ["10.99.51.0/24", "10.99.52.0/24", "10.99.53.0/24"]
 
   ## https://github.com/terraform-aws-modules/terraform-aws-vpc#nat-gateway-scenarios
   ## One NAT Gateway per subnet: we have single AZ node groups
@@ -40,18 +40,6 @@ module "vpc" {
   default_route_table_tags    = { Name = "${var.name}-default" }
   default_security_group_tags = { Name = "${var.name}-default" }
 
-  database_subnet_tags = {
-    Reach = "database"
-  }
-
-  elasticache_subnet_tags = {
-    Reach = "elasticache"
-  }
-
-  intra_subnet_tags = {
-    Reach = "intra"
-  }
-
   ## https://aws.amazon.com/premiumsupport/knowledge-center/eks-vpc-subnet-discovery/
   public_subnet_tags = {
     Reach                               = "public"
@@ -63,6 +51,18 @@ module "vpc" {
     Reach                               = "private"
     "kubernetes.io/cluster/${var.name}" = "shared"
     "kubernetes.io/role/internal-elb"   = 1
+  }
+
+  intra_subnet_tags = {
+    Reach = "intra"
+  }
+
+  database_subnet_tags = {
+    Reach = "database"
+  }
+
+  elasticache_subnet_tags = {
+    Reach = "elasticache"
   }
 
   tags = {

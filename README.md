@@ -302,6 +302,28 @@ should be added as HCL).
 Variables for AWS API (`AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`) might be
 added as "Variable sets".
 
+## Spacelift
+
+The project is ready to use with Spacelift.
+
+Spacelift can use custom container images, so it is suggested to use such a
+container with preinstalled [asdf](https://asdf-vm.com/), ie.
+[dex4er/debian-asdf](https://hub.docker.com/r/dex4er/debian-asdf).
+
+In this case use customized workflow and add the commands to pre-Applying and pre-Performing scripts:
+
+```sh
+cp .tool-versions /root
+while read plugin version; do asdf plugin add $plugin || test $? = 2; done < .tool-versions
+asdf install
+```
+
+Beside `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` (both not important if you
+use cloud integration), you should create
+`/mnt/workspace/source/terraform.tfvars` mounted file with the content of your
+`terraform.tfvars` file. In this file add `asdf_dir = "/root/.asdf"` Terraform
+variable.
+
 ## Kutt
 
 There is Kutt application deployed to the cluster. See

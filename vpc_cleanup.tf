@@ -4,18 +4,29 @@
 
 resource "null_resource" "vpc_cleanup" {
   triggers = {
-    region = var.region
-    vpc_id = module.vpc.vpc_id
+    asdf_dir   = coalesce(var.asdf_dir, ".vpc_cleanup")
+    asdf_tools = "awscli"
+    region     = var.region
+    vpc_id     = module.vpc.vpc_id
   }
 
   provisioner "local-exec" {
     when    = destroy
-    command = "aws ec2 describe-security-groups --region ${self.triggers.region} --query \"SecurityGroups[?GroupName != 'default' && VpcId == '${self.triggers.vpc_id}'].GroupId\" --output text | xargs -rn1 aws ec2 delete-security-group --region ${self.triggers.region} --group-id"
+    command = "bash ${path.module}/asdf_install.sh"
+    environment = {
+      asdf_dir   = self.triggers.asdf_dir
+      asdf_tools = self.triggers.asdf_tools
+    }
   }
 
   provisioner "local-exec" {
     when    = destroy
-    command = "aws ec2 describe-network-interfaces --region ${self.triggers.region} --filters --query \"NetworkInterfaces[?Status == 'available' && VpcId == '${self.triggers.vpc_id}'].NetworkInterfaceId\" --output text | xargs -rn1 aws ec2 delete-network-interface --region ${self.triggers.region} --network-interface-id"
+    command = "bash ${path.module}/vpc_cleanup_destroy.sh"
+    environment = {
+      asdf_dir = self.triggers.asdf_dir
+      region   = self.triggers.region
+      vpc_id   = self.triggers.vpc_id
+    }
   }
 }
 

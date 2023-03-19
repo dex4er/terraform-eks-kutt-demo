@@ -6,7 +6,7 @@ resource "null_resource" "flux_kustomization_all" {
     asdf_tools                    = "awscli flux2 kubectl"
     cluster_context               = local.cluster_context
     kubeconfig_parameter          = aws_ssm_parameter.kubeconfig.name
-    kustomization_to_remove_later = "aws-load-balancer-controller"
+    kustomization_to_remove_later = "aws-load-balancer-controller|external-dns"
     region                        = var.region
   }
 
